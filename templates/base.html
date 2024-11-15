@@ -10,7 +10,8 @@
         <title>{% block title %} DHAT Stack {% endblock title%}</title>
         <script defer src="{% static 'js/htmx.min.js' %}"></script>
         <script defer src="{% static 'js/alpine.min.js' %}"></script>
-        {% tailwind_css %} {% component_css_dependencies %}
+        {% tailwind_css %} 
+        {% component_css_dependencies %}
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% include "_navbar.html" %}

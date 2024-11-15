@@ -3,11 +3,29 @@
 <!--- TODO ITEM -->
 {% partialdef todoitem %}
 <li
-    class="flex justify-between items-center p-4 mb-2 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+    class="flex justify-between items-center p-4 mb-2 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 {{ todo.completed|yesno:'line-through bg-green-100,'}}"
+    id="todoitem-{{ todo.id }}"
+    hx-trigger="click"
+    hx-post="{% url 'mark_done' todo.id %}"
+    hx-target="#todoitem-{{ todo.id }}"
+    hx-swap="outerHTML"
+    hx-include="#todoitem-{{ todo.id }} input[name='done']"
 >
+    <input
+        type="hidden"
+        name="done"
+        value="{{ todo.completed|yesno:'false,true' }}"
+    />
     <span class="text-gray-800 font-medium">{{ todo.title }}</span>
     <button
+        x-data
         class="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-50"
+        hx-delete="{% url 'delete_todo' todo.id %}"
+        hx-target="#todoitem-{{ todo.id }}"
+        hx-swap="outerHTML"
+        hx-trigger="click"
+        hx-params="none"
+        @click="event.stopPropagation()"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -25,19 +43,24 @@
         </svg>
     </button>
 </li>
-{% endpartialdef todoitem %} {% partialdef error %}
+{% endpartialdef todoitem %}
+
+<!--- ERROR -->
+{% partialdef error %}
 <span class="text-red-500 text-center mt-4"> {{ error }} </span>
 {% endpartialdef error %}
 
 <!--- TODO FORM -->
 {% block content %}
 <form
+    x-data
     hx-post="{% url 'todo' %}"
     hx-target="#todo-list"
     hx-swap="afterbegin"
     hx-trigger="submit"
     class="py-12"
     method="post"
+    @htmx:after-request.camel="event.target.reset()"
 >
     <div class="mb-4">
         <label for="todo" class="block text-gray-700 text-sm font-bold mb-2"
@@ -51,7 +74,7 @@
             placeholder="Enter a todo item"
             required
         />
-          {% partial error %}
+        {% partial error %}
     </div>
     <div class="flex items-center justify-between">
         <button
@@ -72,5 +95,4 @@
     </p>
     {% endif %}
 </div>
-
 {% endblock %}
