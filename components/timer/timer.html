@@ -1,0 +1,4 @@
+<div x-data="timer" class="text-center">
+    <span class="text-4xl font-bold mb-4 block" id="timer" x-text="timer"></span>
+    <button @click="started ? stopTimer() : startTimer()" x-text="started ? 'Stop' : 'Start'" class="text-white px-4 py-2 rounded-md text-2xl" :class="started ? 'bg-red-500' : 'bg-green-500'"></button>
+</div>

@@ -1,0 +1,17 @@
+<div x-data="{ count: 0 }" class="text-center">
+    <span class="text-4xl font-bold mb-4 block" id="counter" x-text="count"></span>
+    <div class="flex gap-2">
+        <button
+            @click="count--"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md text-2xl"
+        >
+            -
+        </button>
+        <button
+            @click="count++"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md text-2xl"
+        >
+            +
+        </button>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+<main
+    class="container mx-auto flex flex-col justify-center items-center h-screen"
+>
+    <h1 class="text-4xl font-bold mb-4">Django + HTMX + Alpine.js</h1>
+    <div x-data="{ activeTab: 'tab1' }" class="w-full max-w-2xl mt-8">
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-gray-200">
+            <button
+                @click="activeTab = 'tab1'"
+                :class="{ 'border-b-2 border-blue-500': activeTab === 'tab1' }"
+                class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none flex-1 border-r-2 border-r-gray-200"
+            >
+                Counter
+            </button>
+            <button
+                @click="activeTab = 'tab2'"
+                :class="{ 'border-b-2 border-blue-500': activeTab === 'tab2' }"
+                class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 focus:outline-none flex-1 border-r-2 border-r-gray-200"
+            >
+                Timer
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="mt-4 flex justify-center">
+            <div x-show="activeTab === 'tab1'" class="p-4">
+                {% component "counter" %} {% endcomponent %}
+            </div>
+            <div x-show="activeTab === 'tab2'" class="p-4">
+                {% component "timer" %} {% endcomponent %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

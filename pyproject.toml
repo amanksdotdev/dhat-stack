@@ -1,0 +1,15 @@
+[project]
+name = "dhat-stack"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1.3",
+    "django-htmx>=1.21.0",
+    "django-tailwind>=3.8.0",
+    "django-browser-reload>=1.17.0",
+    "django-components>=0.102",
+    "pip>=24.3.1",
+    "django-template-partials>=24.4",
+]

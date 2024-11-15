@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% load partials %}
+
+<!--- TODO ITEM -->
+{% partialdef todoitem %}
+<li
+    class="flex justify-between items-center p-4 mb-2 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+>
+    <span class="text-gray-800 font-medium">{{ todo.title }}</span>
+    <button
+        class="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-50"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+            />
+        </svg>
+    </button>
+</li>
+{% endpartialdef todoitem %} {% partialdef error %}
+<span class="text-red-500 text-center mt-4"> {{ error }} </span>
+{% endpartialdef error %}
+
+<!--- TODO FORM -->
+{% block content %}
+<form
+    hx-post="{% url 'todo' %}"
+    hx-target="#todo-list"
+    hx-swap="afterbegin"
+    hx-trigger="submit"
+    class="py-12"
+    method="post"
+>
+    <div class="mb-4">
+        <label for="todo" class="block text-gray-700 text-sm font-bold mb-2"
+            >New Todo</label
+        >
+        <input
+            type="text"
+            id="todo"
+            name="todo"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter a todo item"
+            required
+        />
+          {% partial error %}
+    </div>
+    <div class="flex items-center justify-between">
+        <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+            Add Todo
+        </button>
+    </div>
+</form>
+<div id="todos" class="mt-4 flex-1 px-4">
+    <ul id="todo-list" class="flex flex-col gap-4">
+        {% for todo in todos %} {% partial todoitem %} {% endfor %}
+    </ul>
+    {% if not todos %}
+    <p class="text-gray-500 text-center mt-4">
+        No todo items yet. Add one above!
+    </p>
+    {% endif %}
+</div>
+
+{% endblock %}
