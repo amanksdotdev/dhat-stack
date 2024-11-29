@@ -1,7 +1,7 @@
 [project]
 name = "dhat-stack"
 version = "0.1.0"
-description = "Add your description here"
+description = "🚀 DHAT Stack: A modern full-stack template using Django + HTMX + Alpine.js + Tailwind CSS. Build dynamic, responsive web apps with ease and minimal JavaScript!"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -12,4 +12,7 @@ dependencies = [
     "django-components>=0.102",
     "pip>=24.3.1",
     "django-template-partials>=24.4",
+    "django-environ==0.9.0",
+    "gunicorn==21.1.0",
+    "whitenoise==6.3.0",
 ]

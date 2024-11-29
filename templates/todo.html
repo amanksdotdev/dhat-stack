@@ -25,7 +25,7 @@
         hx-swap="outerHTML"
         hx-trigger="click"
         hx-params="none"
-        @click="event.stopPropagation()"
+        @click="event.stopPropagation(); todosLength -= 1"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -52,47 +52,50 @@
 
 <!--- TODO FORM -->
 {% block content %}
-<form
-    x-data
-    hx-post="{% url 'todo' %}"
-    hx-target="#todo-list"
-    hx-swap="afterbegin"
-    hx-trigger="submit"
-    class="py-12"
-    method="post"
-    @htmx:after-request.camel="event.target.reset()"
->
-    <div class="mb-4">
-        <label for="todo" class="block text-gray-700 text-sm font-bold mb-2"
-            >New Todo</label
-        >
-        <input
-            type="text"
-            id="todo"
-            name="todo"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter a todo item"
-            required
-        />
-        {% partial error %}
+<div x-data="{ todosLength: {{ todos|length }} }">
+    <form
+        x-data
+        hx-post="{% url 'todo' %}"
+        hx-target="#todo-list"
+        hx-swap="afterbegin"
+        hx-trigger="submit"
+        class="py-12"
+        method="post"
+        @htmx:after-request.camel="event.target.reset(); todosLength += 1"
+    >
+        <div class="mb-4">
+            <label for="todo" class="block text-gray-700 text-sm font-bold mb-2"
+                >New Todo</label
+            >
+            <input
+                type="text"
+                id="todo"
+                name="todo"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter a todo item"
+                required
+            />
+            {% partial error %}
+        </div>
+        <div class="flex items-center justify-between">
+            <button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+                Add Todo
+            </button>
+        </div>
+    </form>
+    <div id="todos" class="mt-4 flex-1 px-4">
+        <ul id="todo-list" class="flex flex-col gap-4">
+            {% for todo in todos %} {% partial todoitem %} {% endfor %}
+        </ul>
+        {% if todos|length == 0 %}
+        <p class="text-gray-500 text-center mt-4" x-show="todosLength == 0">
+            No todo items yet. Add one above!
+        </p>
+        {% endif %}
     </div>
-    <div class="flex items-center justify-between">
-        <button
-            type="submit"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-            Add Todo
-        </button>
-    </div>
-</form>
-<div id="todos" class="mt-4 flex-1 px-4">
-    <ul id="todo-list" class="flex flex-col gap-4">
-        {% for todo in todos %} {% partial todoitem %} {% endfor %}
-    </ul>
-    {% if not todos %}
-    <p class="text-gray-500 text-center mt-4">
-        No todo items yet. Add one above!
-    </p>
-    {% endif %}
 </div>
+
 {% endblock %}
