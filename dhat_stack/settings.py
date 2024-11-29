@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import environ
+import os
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
+    "django_components.middleware.ComponentDependencyMiddleware",
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
@@ -149,7 +151,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static', BASE_DIR / 'components']
+STATICFILES_DIRS = [BASE_DIR / 'static']
+COMPONENTS = {
+    "dirs": [
+        os.path.join(BASE_DIR, "components"),
+    ],
+}
 STATICFILES_FINDERS = [
     # Default finders
     "django.contrib.staticfiles.finders.FileSystemFinder",
