@@ -4,5 +4,10 @@
             <a href="{% url 'index' %}" class="text-white hover:text-gray-300">Home</a>
             <a href="{% url 'todo' %}" class="text-white hover:text-gray-300">Todo</a>
         </div>
+        <div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="text-white">Log out</a>
+            {% endif %}
+        </div>
     </div>
 </nav>

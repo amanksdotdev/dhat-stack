@@ -15,7 +15,7 @@
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% include "_navbar.html" %}
-        <main class="container mx-auto px-4">
+        <main class="container mx-auto px-4" id="root_container">
             {% block content %} {% endblock content %}
         </main>
         {% component_js_dependencies %}

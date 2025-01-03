@@ -3,42 +3,42 @@
 <!--- TODO ITEM -->
 {% partialdef todoitem %}
 <li
-    class="flex justify-between items-center p-4 mb-2 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 {{ todo.completed|yesno:'line-through bg-green-100,'}}"
-    id="todoitem-{{ todo.id }}"
-    hx-trigger="click"
-    hx-post="{% url 'mark_done' todo.id %}"
-    hx-target="#todoitem-{{ todo.id }}"
-    hx-swap="outerHTML"
-    hx-include="#todoitem-{{ todo.id }} input[name='done']"
+        class="flex justify-between items-center p-4 mb-2 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 {{ todo.completed|yesno:'line-through bg-green-100,'}}"
+        id="todoitem-{{ todo.id }}"
+        hx-trigger="click"
+        hx-post="{% url 'mark_done' todo.id %}"
+        hx-target="#todoitem-{{ todo.id }}"
+        hx-swap="outerHTML"
+        hx-include="#todoitem-{{ todo.id }} input[name='done']"
 >
     <input
-        type="hidden"
-        name="done"
-        value="{{ todo.completed|yesno:'false,true' }}"
+            type="hidden"
+            name="done"
+            value="{{ todo.completed|yesno:'false,true' }}"
     />
     <span class="text-gray-800 font-medium">{{ todo.title }}</span>
     <button
-        x-data
-        class="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-50"
-        hx-delete="{% url 'delete_todo' todo.id %}"
-        hx-target="#todoitem-{{ todo.id }}"
-        hx-swap="outerHTML"
-        hx-trigger="click"
-        hx-params="none"
-        @click="event.stopPropagation(); todosLength -= 1"
+            x-data
+            class="text-gray-400 hover:text-red-500 transition-colors duration-200 p-1 rounded-full hover:bg-red-50"
+            hx-delete="{% url 'delete_todo' todo.id %}"
+            hx-target="#todoitem-{{ todo.id }}"
+            hx-swap="outerHTML"
+            hx-trigger="click"
+            hx-params="none"
+            @click="event.stopPropagation(); todosLength -= 1"
     >
         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5"
         >
             <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
             />
         </svg>
     </button>
@@ -54,33 +54,33 @@
 {% block content %}
 <div x-data="{ todosLength: {{ todos|length }} }">
     <form
-        x-data
-        hx-post="{% url 'todo' %}"
-        hx-target="#todo-list"
-        hx-swap="afterbegin"
-        hx-trigger="submit"
-        class="py-12"
-        method="post"
-        @htmx:after-request.camel="event.target.reset(); todosLength += 1"
+            x-data
+            hx-post="{% url 'todo' %}"
+            hx-target="#todo-list"
+            hx-swap="afterbegin"
+            hx-trigger="submit"
+            class="py-12"
+            method="post"
+            @htmx:after-request.camel="event.target.reset(); todosLength += 1"
     >
         <div class="mb-4">
             <label for="todo" class="block text-gray-700 text-sm font-bold mb-2"
-                >New Todo</label
+            >New Todo</label
             >
             <input
-                type="text"
-                id="todo"
-                name="todo"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Enter a todo item"
-                required
+                    type="text"
+                    id="todo"
+                    name="todo"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Enter a todo item"
+                    required
             />
             {% partial error %}
         </div>
         <div class="flex items-center justify-between">
             <button
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
                 Add Todo
             </button>

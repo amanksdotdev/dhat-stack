@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import environ
 import os
 from pathlib import Path
+
+from django.conf.global_settings import LOGIN_URL
 from django.core.management.utils import get_random_secret_key
 
 env = environ.Env(
@@ -178,3 +180,6 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Auth
+LOGIN_URL = 'login'
